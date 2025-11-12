@@ -1,33 +1,31 @@
-import { Component, output, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { type InvestmentInput } from '../investment-input.model';
+import { InvestmentService } from '../investment.service';
 
 @Component({
   selector: 'app-user-input',
   standalone: true,
   imports: [FormsModule],
   templateUrl: './user-input.component.html',
-  styleUrl: './user-input.component.css'
+  styleUrl: './user-input.component.css',
 })
 export class UserInputComponent {
-  calculate = output<InvestmentInput>();
+  private readonly investmentService = inject(InvestmentService);
 
   // input fields always return string values
   investmentCalculatorFormData = signal({
     inititalInvestment: '0',
     annualInvestment: '0',
     expectedReturn: '5',
-    duration: '10'
+    duration: '10',
   });
 
   onSubmit() {
-    // Instead of Number() we could also use the unary plus operator "+" in front of a string
-    // Example: +this.investmentCalculatorFormData.inititalInvestment
-    this.calculate.emit({
+    this.investmentService.calculateInvestmentResults({
       initialInvestment: Number(this.investmentCalculatorFormData().inititalInvestment),
       annualInvestment: Number(this.investmentCalculatorFormData().annualInvestment),
       expectedReturn: Number(this.investmentCalculatorFormData().expectedReturn),
-      duration: Number(this.investmentCalculatorFormData().duration)
+      duration: Number(this.investmentCalculatorFormData().duration),
     });
 
     // Reset form after submission
@@ -35,7 +33,7 @@ export class UserInputComponent {
       inititalInvestment: '0',
       annualInvestment: '0',
       expectedReturn: '5',
-      duration: '10'
+      duration: '10',
     });
   }
 }
