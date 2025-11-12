@@ -8,7 +8,7 @@ table {
 }
 
 table thead {
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   color: #83e6c0;
 }
 
@@ -16,4 +16,8 @@ table tbody {
   font-family: "Roboto Condensed", sans-serif;
   font-size: 0.85rem;
   color: #c2e9e0;
+}
+
+td {
+  text-align: center;
 }
